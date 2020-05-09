@@ -1,19 +1,56 @@
 "use strict"; //严格模式
+
+/**
+ * 获取id的DOM元素,有语义化
+ * @param {string} id
+ */
+function $(id) {
+  if (typeof id != "string") {
+    throw new Error("bug来辣");
+  }
+  let dom = document.getElementById(id);
+  if (!dom) {
+    throw new Error("bug又来辣");
+  }
+  return dom;
+}
+/**
+ * 创建元素
+ */
+function createEl(node) {
+  return document.createElement(node);
+}
+/**
+ *设置节点属性
+ */
+function setAttr(node, styles) {
+  for (let key in styles) {
+    node.setAttribute(key, styles[key]);
+    //每次只能设置一个属性
+  }
+}
+/**
+ * 获取节点属性
+ */
+function getAttr(node, attr) {
+  return node.getAttribute(attr);
+}
+
 // 获取div
-const divDom = document.getElementById("table-data-wrap"); //获取元素
-const divDom1 = document.getElementById("aaa"); //获取元素
-console.log(divDom);
+const divDom = $("container-wrap"); //获取元素
 //固定语法
-const tableDom = document.createElement("table"); //创建DOM元素
+const tableDom = createEl("table"); //创建DOM元素
+const styles = {
+  border: "0",
+  cellpadding: "0",
+  cellspacing: "0",
+  width: "100%",
+  id: "table-data-wrap",
+};
+setAttr(tableDom, styles);
 
-tableDom.width = "100%";
-tableDom.setAttribute("border", "0"); //设置属性
-tableDom.setAttribute("cellpadding", "0");
-tableDom.setAttribute("cellspacing", "0");
-tableDom.setAttribute("id", "table-data-wrap");
-let aa = tableDom.getAttribute("id"); //获取属性
+let aa = getAttr(tableDom, "id");
 
-// tableDom.innerHTML = "卢本伟牛逼";//改DOM元素的内容
 tableDom.innerHTML = `<thead>
                         <tr>
                             <th>头像</th>
