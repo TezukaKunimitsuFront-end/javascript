@@ -14,22 +14,9 @@ const styles = {
 };
 window.Tezuka.setAttr(tableDom, styles);
 
-const tableTheadData = [
-  { lable: "头像" },
-  { lable: "姓名" },
-  { lable: "性别" },
-  { lable: "年龄" },
-  { lable: "手机号" },
-  { lable: "国籍" },
-  {
-    lable: "爱好",
-    width: 200,
-    id: "aaa",
-  },
-  { lable: "头衔" },
-  { lable: "操作" },
-];
-
+/**
+ * 表头数据
+ */
 let theadHtml = `<thead><tr>`;
 
 tableTheadData.forEach((item) => {
@@ -42,6 +29,55 @@ tableTheadData.forEach((item) => {
 });
 theadHtml += `</tr></thead>`;
 
-// 生成表头
-tableDom.innerHTML = theadHtml;
+/**
+ * 列表数据
+ */
+let tbodyHtml = `<tbody>`;
+
+let trHtml = ``;
+for (let i = 0; i < tableTbodyData.length; i++) {
+  //块级作用域,子集作用域可以访问父集变量
+  const data = tableTbodyData[i];
+  //开始tr
+  trHtml += `<tr>`;
+  //头像
+  trHtml += `<td>
+                  <div class="face">
+                      <span class="gender icon-${data.face.gender}"></span>
+                      <img src="${data.face.img}" alt="">
+                  </div>
+             </td>`;
+  //姓名
+  trHtml += `<td>
+                  <div class="people-name">
+                      <h4 class="name">${data.name.trueName}</h4>
+                      <span class="nickname option-05 fs-12">${data.name.nickName}</span>
+                  </div>
+             </td>`;
+  //性别
+  trHtml += `<td>
+                  <div class="gender-wrap">
+                      <span class="gender icon-girl${
+                        data.face.gender === "girl" ? "" : " option-05"
+                      }"></span>
+                      <span class="gender icon-boy${
+                        data.face.gender === "boy" ? "" : " option-05"
+                      }"></span>
+                  </div>
+              </td>`;
+  //年龄
+  trHtml += `<td>
+                <div class="age text-center">
+                    <p>25</p>
+                    <span class="option-05 fs-12">（单身狗）</span>
+                </div>
+              </td>`;
+  //结束tr
+  trHtml += `</tr>`;
+}
+tbodyHtml += `${trHtml}</tbody>`;
+
+// 生成表头+生成table内容
+tableDom.innerHTML = theadHtml + tbodyHtml;
+// 添加到页面
 divDom.appendChild(tableDom);
